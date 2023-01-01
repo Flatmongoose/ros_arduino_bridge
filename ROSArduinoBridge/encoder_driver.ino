@@ -69,17 +69,20 @@
     }
   }
 #elif defined(ESP32_ENCODER_DRIVER)
-  #include <ESP32Encoder.h>
+  #include "ESP32Encoder.h"
 
   ESP32Encoder encoder_left;
   ESP32Encoder encoder_right;
 
-  // Enable the weak pull up resistors
-  ESP32Encoder::useInternalWeakPullResistors=UP;
+  void initialiseEncoders()
+  {
+    // Enable the weak pull up resistors
+    ESP32Encoder::useInternalWeakPullResistors=UP;
 
-  // use pin 19 and 18 for the first encoder
-  encoder_left.attachFullQuad(MOTOR_1_ENCODER_A_PIN, MOTOR_1_ENCODER_B_PIN);
-  encoder_right.attachFullQuad(MOTOR_2_ENCODER_A_PIN, MOTOR_2_ENCODER_B_PIN);
+    // use pin 19 and 18 for the first encoder
+    encoder_left.attachFullQuad(MOTOR_1_ENCODER_A_PIN, MOTOR_1_ENCODER_B_PIN);
+    encoder_right.attachFullQuad(MOTOR_2_ENCODER_A_PIN, MOTOR_2_ENCODER_B_PIN);
+  }
 
   /* Wrap the encoder reading function */
   long readEncoder(int i) {

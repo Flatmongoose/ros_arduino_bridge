@@ -1,6 +1,9 @@
 /***************************************************************
    Motor driver function definitions - by James Nugen
    *************************************************************/
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
 
 #ifdef L298_MOTOR_DRIVER
   #define RIGHT_MOTOR_BACKWARD 5
@@ -21,3 +24,7 @@
 void initMotorController();
 void setMotorSpeed(int i, int spd);
 void setMotorSpeeds(int leftSpeed, int rightSpeed);
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus
