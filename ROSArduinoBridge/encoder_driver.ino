@@ -68,6 +68,35 @@
       return;
     }
   }
+#elif defined(ESP32_ENCODER_DRIVER)
+  #include <ESP32Encoder.h>
+
+  ESP32Encoder encoder_left;
+  ESP32Encoder encoder_right;
+
+  // Enable the weak pull up resistors
+  ESP32Encoder::useInternalWeakPullResistors=UP;
+
+  // use pin 19 and 18 for the first encoder
+  encoder_left.attachFullQuad(MOTOR_1_ENCODER_A_PIN, MOTOR_1_ENCODER_B_PIN);
+  encoder_right.attachFullQuad(MOTOR_2_ENCODER_A_PIN, MOTOR_2_ENCODER_B_PIN);
+
+  /* Wrap the encoder reading function */
+  long readEncoder(int i) {
+    if (i == LEFT) return encoder_left.getCount();
+    else return encoder_right.getCount();
+  }
+
+  /* Wrap the encoder reset function */
+  void resetEncoder(int i) {
+    if (i == LEFT){
+      encoder_left.clearCount();
+      return;
+    } else { 
+      encoder_right.clearCount();
+      return;
+    }
+  }
 #else
   #error A encoder driver must be selected!
 #endif

@@ -86,6 +86,26 @@
     setMotorSpeed(LEFT, leftSpeed);
     setMotorSpeed(RIGHT, rightSpeed);
   }
+#elif defined(CYTRON_MOTOR_DRIVER)
+#include "CytronMotorDriver.h"
+
+// Configure the motor driver.
+CytronMD motor1(PWM_PWM, MOTOR_1_M1A_PIN, MOTOR_1_M1B_PIN);   
+CytronMD motor2(PWM_PWM, MOTOR_2_M2A_PIN, MOTOR_2_M2B_PIN);
+
+void initMotorController() {
+  //do nothing
+}
+
+  void setMotorSpeed(int i, int spd) {
+     if (i == LEFT) motor1.setSpeed(spd);
+    else motor2.setSpeed(spd);
+  }
+  
+  void setMotorSpeeds(int leftSpeed, int rightSpeed) {
+    motor1.setSpeed(leftSpeed);
+    motor2.setSpeed(rightSpeed);
+  }
 #else
   #error A motor driver must be selected!
 #endif

@@ -11,6 +11,13 @@
   #define LEFT_MOTOR_ENABLE 13
 #endif
 
+#ifdef CYTRON_MOTOR_DRIVER
+#define MOTOR_1_M1A_PIN (14)
+#define MOTOR_1_M1B_PIN (27)
+#define MOTOR_2_M2A_PIN (0)
+#define MOTOR_2_M2B_PIN (4)
+#endif
+
 void initMotorController();
 void setMotorSpeed(int i, int spd);
 void setMotorSpeeds(int leftSpeed, int rightSpeed);
