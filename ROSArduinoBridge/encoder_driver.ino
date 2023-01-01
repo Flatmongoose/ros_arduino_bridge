@@ -79,9 +79,12 @@
     // Enable the weak pull up resistors
     ESP32Encoder::useInternalWeakPullResistors=UP;
 
+    /*encoder_left.setFilter(1023);
+    encoder_right.setFilter(1023);*/
+
     // use pin 19 and 18 for the first encoder
-    encoder_left.attachFullQuad(MOTOR_1_ENCODER_A_PIN, MOTOR_1_ENCODER_B_PIN);
-    encoder_right.attachFullQuad(MOTOR_2_ENCODER_A_PIN, MOTOR_2_ENCODER_B_PIN);
+    encoder_left.attachSingleEdge(MOTOR_1_ENCODER_A_PIN, MOTOR_1_ENCODER_B_PIN);
+    encoder_right.attachSingleEdge(MOTOR_2_ENCODER_A_PIN, MOTOR_2_ENCODER_B_PIN);
   }
 
   /* Wrap the encoder reading function */

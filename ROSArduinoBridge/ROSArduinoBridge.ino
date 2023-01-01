@@ -151,6 +151,7 @@ void resetCommand() {
   arg2 = 0;
   arg = 0;
   cmd_index = 0;
+  
 }
 
 /* Run a command.  Commands are defined in commands.h */
@@ -161,6 +162,9 @@ int runCommand() {
   int pid_args[4];
   arg1 = atoi(argv1);
   arg2 = atoi(argv2);
+
+  if(cmd == NULL)
+    return 0;
   
   switch(cmd) {
   case GET_BAUDRATE:
@@ -232,7 +236,7 @@ int runCommand() {
     Serial.println("OK"); 
     break;
   case UPDATE_PID:
-    while ((str = strtok_r(p, ":", &p)) != NULL) {
+    while ((int)(str = strtok_r(p, ":", &p)) != '\0') {
        pid_args[i] = atoi(str);
        i++;
     }
@@ -244,14 +248,21 @@ int runCommand() {
     break;
 #endif
   default:
-    Serial.println("Invalid Command");
+    //Serial.println("Invalid Command");
     break;
   }
+
+  return 1;
 }
 
 /* Setup function--runs once at startup. */
 void setup() {
   Serial.begin(BAUDRATE);
+  Serial.println("Started");
+
+  
+
+  initialiseEncoders();
 
 // Initialize the motor controller if used */
 #ifdef USE_BASE
@@ -276,7 +287,7 @@ void setup() {
     // enable PCINT1 and PCINT2 interrupt in the general interrupt mask
     PCICR |= (1 << PCIE1) | (1 << PCIE2);
   #endif
-  initMotorController();
+  //initMotorController();
   resetPID();
 #endif
 
@@ -297,15 +308,18 @@ void setup() {
    interval and check for auto-stop conditions.
 */
 void loop() {
+
   while (Serial.available() > 0) {
     
     // Read the next character
     chr = Serial.read();
-
+    
+    //Serial.printf("Read %d\n", chr);
     // Terminate a command with a CR
     if (chr == 13) {
       if (arg == 1) argv1[cmd_index] = NULL;
       else if (arg == 2) argv2[cmd_index] = NULL;
+      //Serial.println("Running command");
       runCommand();
       resetCommand();
     }
@@ -350,7 +364,7 @@ void loop() {
     moving = 0;
   }
 #endif
-
+  
 // Sweep servos
 #ifdef USE_SERVOS
   int i;

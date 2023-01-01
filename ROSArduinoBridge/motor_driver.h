@@ -17,7 +17,7 @@ extern "C" {
 #ifdef CYTRON_MOTOR_DRIVER
 #define MOTOR_1_M1A_PIN (14)
 #define MOTOR_1_M1B_PIN (27)
-#define MOTOR_2_M2A_PIN (0)
+#define MOTOR_2_M2A_PIN (17)
 #define MOTOR_2_M2B_PIN (4)
 #endif
 

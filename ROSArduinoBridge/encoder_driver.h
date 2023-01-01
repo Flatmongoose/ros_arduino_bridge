@@ -15,15 +15,16 @@
 #endif
 
 #ifdef ESP32_ENCODER_DRIVER
-  // Left motor
+  // Right motor
   #define MOTOR_2_ENCODER_A_PIN   (26)
   #define MOTOR_2_ENCODER_B_PIN   (13)
 
-  // Right motor
+  // Left motor
   #define MOTOR_1_ENCODER_A_PIN   (15)
-  #define MOTOR_1_ENCODER_B_PIN   (2)
+  #define MOTOR_1_ENCODER_B_PIN   (16)
 #endif
-   
+
+void initialiseEncoders();   
 long readEncoder(int i);
 void resetEncoder(int i);
 void resetEncoders();
